@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "head.html" %} 
+<body>
+
+
+    <div id="wrapper">
+        {% include "navbar.html" %} 
+        <!-- sidebar -->
+       
+        <!-- main contents -->
+        <main class="2xl:ml-[--w-side] xl:ml-[--w-side-md] md:ml-[--w-side-small]">
+
+            <div class="main__inner">
+  
+                <!-- stories -->
+               
+
+                <div class="flex max-lg:flex-col xl:gap-10 md:gap-3 md:mt-10" id="js-oversized">
+ 
+                   
+                    <!-- feed story -->
+                    <div class="md:max-w-[510px] mx-auto flex-1 xl:space-y-6 space-y-3">
+ 
+
+                       
+                        {% for post in posts %}
+                        
+                        <!--  post image-->
+                        <div class="bg-white rounded-xl shadow-sm text-sm font-medium border1 dark:bg-dark2">
+
+                            <!-- post heading -->
+                            <div class="flex gap-3 sm:p-4 p-2.5 text-sm font-medium">
+                                <a href="{{ url_for('profile.user_profile', username=post.username) }}"> <img src="{{ url_for('static', filename=post.profile_picture) }}" alt="" class="w-9 h-9 rounded-full"> </a>  
+                                <div class="flex-1">
+                                    <a href="{{ url_for('profile.user_profile', username=post.username) }}"> <h3 class="text-black dark:text-white"> {{post.username}} </h3> </a>  
+                                   
+                                </div>
+
+                                
+                            </div>
+                            
+                            <!-- post image -->
+                            <div class="relative w-full lg:h-72 h-full sm:px-4">
+                                <img src="{{ url_for('static', filename=post.Post.picture) }}" alt="" class="sm:rounded-lg w-full h-full object-cover">
+                               
+                            </div>
+                            
+
+                            <!-- post icons -->
+                            <div class="sm:p-4 p-1 flex items-center gap-1 text-xs ">
+                                <h2 class="font-semibold text-lg">{{post.username}}:</h2>
+                                <p class="text-sm font-thin">{{post.Post.caption}} </p>
+                                
+                            </div>
+
+                           
+
+                            <!-- add comment -->
+                            
+
+                        </div>
+                        {%endfor%}
+
+
+                       
+
+
+                    
+                       
+
+                    </div> 
+
+
+                    
+
+
+                </div> 
+
+            </div> 
+
+        </main>
+        
+    </div>
+
+ 
+  
+
+   
+ 
+    
+    <!-- Uikit js you can use cdn  https://getuikit.com/docs/installation  or fine the latest  https://getuikit.com/docs/installation -->
+    <script src="{{ url_for('static', filename='js/uikit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Ion icon -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+ 
+
+</body>
+</html>

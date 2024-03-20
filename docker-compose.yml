@@ -1,0 +1,24 @@
+version: '3'
+
+services:
+  app:
+    build:
+      context: ./instagram
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"  
+    depends_on:
+      - db
+    environment:
+      - DATABASE_URL=mysql+mysqlconnector://akshar:Akshar3208@db/instagram 
+    
+  db:
+    image: mysql:latest
+    ports:
+      - "3307:3307"
+    environment:
+      MYSQL_ROOT_PASSWORD: Akshar3208
+      MYSQL_DATABASE: instagram
+      MYSQL_USER: akshar
+      MYSQL_PASSWORD: Akshar3208
+    

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+    {% include "head.html" %} 
+<body>
+
+
+    <div id="wrapper">
+
+        {% include "navbar.html" %} 
+
+        <!-- main contents -->
+        <main class="2xl:ml-[--w-side] xl:ml-[--w-side-md] md:ml-[--w-side-small]">
+
+            <div class="main__inner">
+
+                <!-- profile  -->
+                <div class="py-6 relative">
+  
+                    <div class="flex md:gap-16 gap-4 max-md:flex-col">
+                        <div class="relative md:p-1 rounded-full h-full max-md:w-16 bg-gradient-to-tr from-pink-400 to-pink-600 shadow-md hover:scale-110 duration-500 uk-animation-scale-up">
+                            <div class="relative md:w-40 md:h-40 h-16 w-16 rounded-full overflow-hidden md:border-[6px] border-gray-100 shrink-0 dark:border-slate-900"> 
+                                <img src="{{ url_for('static', filename=profile_picture) }}" alt="" class="w-full h-full absolute object-cover">
+                            </div>
+                           
+                        </div>
+                        <div class="max-w-2x flex-1">
+                            <h3 class="md:text-xl text-base font-semibold text-black dark:text-white">{{username}}</h3>
+                              
+                            <p class="sm:text-sm text-blue-600 mt-1 font-normal text-xs">@{{username}}</p>
+                            
+                            <p class="text-sm mt-2 md:font-normal font-light"> {{bio}}</p>
+
+                            <p class="mt-2 space-x-2 text-gray-500 text-sm hidden" style="margin-top: 11px; "><a href="#" class="inline-block">Travel</a> . <a href="#" class="inline-block">Business</a> . <a href="#" class="inline-block">Technolgy</a>  </p>
+                            
+                            <div class="flex md:items-end justify-between md:mt-8 mt-4 max-md:flex-col gap-4">
+                                <div class="flex sm:gap-10 gap-6 sm:text-sm text-xs max-sm:absolute max-sm:top-10 max-sm:left-36">
+                                    <div>
+                                        <p>Posts</p>
+                                        <h3 class="sm:text-xl sm:font-bold mt-1 text-black dark:text-white text-base font-normal">{{total_post}}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Following</p>
+                                        <h3 class="sm:text-xl sm:font-bold mt-1 text-black dark:text-white text-base font-normal">{{following}}</h3>
+                                    </div>
+                                    <div>
+                                        <p>Followers</p>
+                                        <h3 class="sm:text-xl sm:font-bold mt-1 text-black dark:text-white text-base font-normal">{{followers}}</h3>
+                                    </div>
+                                </div>
+                               
+                            </div>
+                        
+                        </div>
+                    </div>
+
+                </div>
+ 
+                <div class="mt-10">
+
+                    <!-- sticky tabs -->
+
+                    <div  uk-sticky="cls-active: bg-slate-100/60 z-30 backdrop-blur-lg px-4 dark:bg-slate-800/60; start: 500; animation: uk-animation-slide-top">
+                        
+                        <nav class="text-sm text-center text-gray-500 capitalize font-semibold dark:text-white">
+                            <ul     class="flex gap-2 justify-center border-t dark:border-slate-700"
+                                    uk-switcher="connect: #story_tab ; animation: uk-animation-fade, uk-animation-slide-left-medium">
+                            
+                                <li> <a href="#" class="flex items-center p-4 py-2.5 -mb-px border-t-2 border-transparent aria-expanded:text-black aria-expanded:border-black aria-expanded:dark:text-white aria-expanded:dark:border-white"> <ion-icon class="mr-2 text-2xl" name="camera-outline"></ion-icon> Posts  </a> </li>
+                                </ul>
+                        </nav>
+
+                    </div>
+
+                    <div id="story_tab" class="uk-switcher">
+                        
+                        
+                        <!-- Post list -->
+                        <div>
+                        
+                           
+
+                          
+
+
+                            <!-- post list  -->
+
+                            <div class="mt-8">
+
+                                <!-- post heading -->
+                                <div class="flex items-center justify-between py-3">
+                                    <h1 class="text-xl font-bold text-black dark:text-white">Posts</h1>
+
+                                   
+                                </div>
+                             
+                                <!-- Post list -->
+                                <div class="grid lg:grid-cols-4 sm:grid-cols-3 grid-cols-2 gap-3 mt-6"  uk-scrollspy="target: > div; cls: uk-animation-scale-up; delay: 100">
+                                    {% for post in posts %}
+                                    <a href="#preview_modal_{{ loop.index }}" uk-toggle="">
+                                        <div class="lg:hover:scale-105 hover:shadow-lg hover:z-10 duration-500 delay-100"> 
+                                            <div class="relative overflow-hidden rounded-lg uk-transition-toggle">
+                                                <div class="relative w-full lg:h-60 h-full aspect-[3/3]">
+                                                    <img src="{{ url_for('static', filename=post.picture) }}" alt="" class="object-cover w-full h-full">
+                                                </div>
+                                                <div class="absolute inset-0 bg-white/5 backdrop-blur-sm uk-transition-fade">    
+                                                    <div class="flex items-center justify-center gap-4 text-white w-full h-full">
+                                                        <div class="flex items-center gap-2"> <ion-icon class="text-2xl " name="eye-outline"></ion-icon></div>
+                                                        
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </a>
+                                    {%endfor%}
+
+                                   
+                                </div>
+                                
+
+
+                            </div>
+                          
+                          
+
+                        </div>
+
+
+                        
+                      
+
+
+
+
+                        
+
+
+                    </div>
+
+                </div>
+                
+            </div>
+
+
+        </main>
+        
+    </div>
+
+
+    <!-- post preview modal --> 
+    {% for post in posts %}
+    <div class="hidden lg:p-20 max-lg:!items-start" id="preview_modal_{{ loop.index }}" uk-modal="">
+        
+        <div class="uk-modal-dialog tt relative mx-auto overflow-hidden shadow-xl rounded-lg lg:flex items-center ax-w-[86rem] w-full lg:h-[80vh]">
+           
+            <!-- image previewer -->
+            <div class="lg:h-full lg:w-[calc(100vw-400px)] w-full h-96 flex justify-center items-center relative">
+                
+                <div class="relative z-10 w-full h-full" id="post_{{ loop.index }}">
+                    <img src="{{ url_for('static', filename=post.picture) }}" alt="" class="w-full h-full object-cover absolute">
+                </div>
+             
+                <!-- close button -->
+                <button type="button"  class="bg-white rounded-full p-2 absolute right-0 top-0 m-3 uk-animation-slide-right-medium z-10 dark:bg-slate-600 uk-modal-close">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+             
+
+            </div>
+            <div class="lg:w-[400px] w-full bg-white h-full relative  overflow-y-auto shadow-xl dark:bg-dark2 flex flex-col justify-between">
+                
+                <div class="p-5 pb-0">
+
+                    <!-- story heading -->
+                    <div class="flex gap-3 text-sm font-medium">
+                        <img src="{{ url_for('static', filename=profile_picture) }}"  alt="" class="w-9 h-9 rounded-full">
+                        <div class="flex-1">
+                            <h4 class="text-black font-medium dark:text-white"> {{username}} </h4>
+                          
+                        </div>
+ 
+                        <!-- dropdown -->
+                        <div class="-m-1">
+                            <button type="button" class="button__ico w-8 h-8"> <ion-icon class="text-xl" name="ellipsis-horizontal"></ion-icon> </button>
+                            <div  class="w-[253px]" uk-dropdown="pos: bottom-right; animation: uk-animation-scale-up uk-transform-origin-top-right; animate-out: true"> 
+                                <nav> 
+                                    
+                                    <form action="{{ url_for('profile.delete_post', post_id=post.id) }}" method="post">
+                                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                                        <button  type="submit" class="text-red-400"><ion-icon name="trash"  class="text-xl shrink-0" ></ion-icon> Delete </button> 
+                                    </form>
+ 
+                                   
+                                    
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p class="font-normal text-sm leading-6 mt-4">{{post.caption}} </p>
+
+                 
+
+                </div>
+
+              
+            </div>
+
+           
+        </div>
+        
+    </div>
+    {% endfor  %}
+    
+    
+ 
+   
+
+    
+    
+    <!-- Uikit js you can use cdn  https://getuikit.com/docs/installation  or fine the latest  https://getuikit.com/docs/installation -->
+    <script src="{{ url_for('static', filename='js/uikit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Ion icon -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+ 
+
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "head.html" %} 
+</head>
+<body>
+
+
+    <div id="wrapper">
+
+        {% include "navbar.html" %} 
+         
+        <!-- main contents -->
+        <main class="2xl:ml-[--w-side] xl:ml-[--w-side-md] md:ml-[--w-side-small]">
+
+            <div class="max-w-3xl p-6 mx-auto">
+
+                <!-- heading title -->
+                <div class="page__heading">
+                    
+                    <h1> Search</h1>
+                </div>
+                <!-- header -->
+        <form id="searchForm" method="POST" action="/profile/search" onchange="document.getElementById('searchForm').submit();">
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+         <div class="py-4 space-y-5 border-b border-gray-100 dark:border-slate-700">
+           
+
+            <div class="relative -mx-1">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-5 h-5 absolute left-3 bottom-1/2 translate-y-1/2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+                </svg>
+                <input type="text" name="query" id="searchInput" placeholder="Search" class="bg-transparen w-full !pl-10 !py-2 !rounded-lg">
+            </div>
+
+        </div>
+    </form>
+
+                <!-- tabs -->
+
+                <nav class="border-b dark:border-slate-700" uk-sticky="cls-active: bg-slate-100/60 z-30 backdrop-blur-lg px-4 ;  animation: uk-animation-slide-top">
+                  
+                    <ul uk-tab class="flex gap-5 text-sm text-center text-gray-600 capitalize font-semibold -mb-px dark:text-white/80"  
+                        uk-switcher="connect: #ttabs ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"> 
+                       
+                       
+                       <li> <a href="#" class="inline-block py-5 border-b-2 border-transparent aria-expanded:text-black aria-expanded:border-black aria-expanded:dark:text-white aria-expanded:dark:border-white"> Results </a> </li>
+                     
+                   </ul> 
+                </nav>
+
+                <div class="uk-switcher mt-10" id="ttabs">
+      
+                    
+                   
+                    {% if users %}
+
+                    <!-- list Two -->
+                    <div>
+                        {% for user in users %}
+                        <div class="space-y-6 text-sm font-normal text-gray-500" uk-scrollspy="target: > div; cls: uk-animation-slide-bottom-small; delay: 100 ">
+  
+                            <div class="flex items-center justify-between gap-4">
+                                <a  href="{{ url_for('profile.user_profile', username=user.username) }}">
+                                    <div class="relative w-12 h-12"> 
+                                        <img  src="{{ url_for('static', filename=user.profile_picture) }}" class="object-cover w-full h-full rounded-full" alt="">
+                                    </div>
+                                </a>
+                                <div class="flex-1">
+                                    <a  href="{{ url_for('profile.user_profile', username=user.username) }}"> <h4 class="text-base font-medium text-black dark:text-white"> {{user.username}} </h4> </a>
+                                    
+                                </div>
+                               
+                            </div>  
+  
+                           
+
+                        </div>
+                        {%endfor%}
+
+                        
+                    </div>
+
+                    {% endif%}
+
+
+                 
+
+
+                     
+
+                </div>  
+
+             
+            </div>
+
+
+        </main>
+        
+    </div>
+
+  
+
+    
+   
+
+
+    
+ 
+    
+  <!-- Uikit js you can use cdn  https://getuikit.com/docs/installation  or fine the latest  https://getuikit.com/docs/installation -->
+  <script src="{{ url_for('static', filename='js/uikit.min.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Ion icon -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+ 
+
+</body>
+</html>

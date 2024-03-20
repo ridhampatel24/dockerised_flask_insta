@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% include "head.html" %} 
+ 
+</head>
+<body>
+
+
+    <div id="wrapper">
+
+        {% include "navbar.html" %} 
+
+        <!-- main contents -->
+        <main class="2xl:ml-[--w-side] xl:ml-[--w-side-md] md:ml-[--w-side-small]">
+
+            <div class="max-w-2xl mx-auto">
+
+                <!-- heading title -->
+                <div class="page__heading py-6 mt-6">
+                    <a href="#">
+                        <ion-icon name="chevron-back-outline"></ion-icon> Back
+                    </a>
+                    <h1> Settings </h1>
+                </div>
+                
+                <div class="bg-white border border-slate-200 rounded-xl shadow-sm dark:border-slate-700 dark:bg-dark2">
+                    
+                    <div class="flex md:gap-8 gap-4 items-center md:p-10 p-6">
+
+                        <form method="POST" action="/profile/upload" enctype="multipart/form-data" id="uploadForm">
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div class="relative md:w-20 md:h-20 w-12 h-12 shrink-0"> 
+
+                            <label for="file" class="cursor-pointer">
+                                <img id="img" src="{{ url_for('static', filename=profile_picture) }}" class="object-cover w-full h-full rounded-full" alt=""/>
+                                <input type="file" id="file" name="file" class="hidden" onchange="document.getElementById('uploadForm').submit();"  />
+                            </label>
+      
+                            <label for="file" class="md:p-1 p-0.5 rounded-full bg-slate-600 md:border-4 border-white absolute -bottom-2 -right-2 cursor-pointer dark:border-slate-700">
+    
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="md:w-4 md:h-4 w-3 h-3 fill-white">
+                                    <path d="M12 9a3.75 3.75 0 100 7.5A3.75 3.75 0 0012 9z" />
+                                    <path fill-rule="evenodd" d="M9.344 3.071a49.52 49.52 0 015.312 0c.967.052 1.83.585 2.332 1.39l.821 1.317c.24.383.645.643 1.11.71.386.054.77.113 1.152.177 1.432.239 2.429 1.493 2.429 2.909V18a3 3 0 01-3 3h-15a3 3 0 01-3-3V9.574c0-1.416.997-2.67 2.429-2.909.382-.064.766-.123 1.151-.178a1.56 1.56 0 001.11-.71l.822-1.315a2.942 2.942 0 012.332-1.39zM6.75 12.75a5.25 5.25 0 1110.5 0 5.25 5.25 0 01-10.5 0zm12-1.5a.75.75 0 100-1.5.75.75 0 000 1.5z" clip-rule="evenodd" />
+                                </svg>
+    
+                                <input id="file" type="file" class="hidden" />
+            
+                            </label>
+
+                        </div>
+                        </form>
+
+                        <div class="flex-1">
+                            <h3 class="md:text-xl text-base font-semibold text-black dark:text-white"> {{session['username']}} </h3>
+                            <p class="text-sm text-blue-600 mt-1 font-normal"> {{session['username']}}</p>
+                        </div>
+
+                    </div>
+                       
+                    <hr class="border-t border-gray-100 dark:border-slate-700">
+                    
+                    <!-- nav tabs -->
+                    <div class="relative -mb-px px-2" tabindex="-1" uk-slider="finite: true">
+
+                        <nav class="overflow-hidden rounded-xl uk-slider-container pt-2">
+             
+                            <ul class="uk-slider-items w-[calc(100%+10px)] capitalize font-semibold text-gray-500 text-sm dark:text-white" 
+                                uk-switcher="connect: #setting_tab ; animation: uk-animation-slide-right-medium, uk-animation-slide-left-medium"> 
+                                
+                                <li class="w-auto pr-2.5"> <a href="#" class="inline-block p-4 pt-2 border-b-2 border-transparent aria-expanded:text-blue-500 aria-expanded:border-blue-500"> General </a> </li>
+                                <li class="w-auto pr-2.5"> <a href="#" class="inline-block p-4 pt-2 border-b-2 border-transparent aria-expanded:text-blue-500 aria-expanded:border-blue-500"> password</a> </li> 
+                                 
+                            </ul>
+                        
+                        </nav>
+                                
+                        <a class="absolute -translate-y-1/2 top-1/2 left-0 flex items-center w-20 h-full p-2.5 justify-start rounded-xl bg-gradient-to-r from-white via-white dark:from-slate-800 dark:via-slate-800" href="#" uk-slider-item="previous"> <ion-icon name="chevron-back" class="text-2xl ml-1"></ion-icon> </a>
+                        <a class="absolute right-0 -translate-y-1/2 top-1/2 flex items-center w-20 h-full p-2.5 justify-end rounded-xl bg-gradient-to-l from-white via-white dark:from-slate-800 dark:via-slate-800" href="#" uk-slider-item="next">  <ion-icon name="chevron-forward" class="text-2xl mr-1"></ion-icon> </a>
+                   
+                    </div>
+ 
+                </div>
+
+                <!-- tab content -->
+                <div class="mt-6 mb-20 text-sm font-medium text-gray-600 dark:text-white/80">
+
+                    <div id="setting_tab" class="uk-switcher bg-white border rounded-xl shadow-sm md:py-12 md:px-20 p-6 overflow-hidden dark:border-slate-700 dark:bg-dark2"> 
+                        
+
+                        <!-- tab user basic info -->
+                        <form method="POST" action="/profile/update"  >
+                        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                        <div>
+
+                            <div>
+                                
+                                <div class="space-y-6">
+
+                                    <div class="md:flex items-center gap-10">
+                                        <label class="md:w-32 text-right"> Username </label>
+                                        <div class="flex-1 max-md:mt-4">
+                                            <input type="text" name='username' placeholder= {{session['username']}} class="lg:w-1/2 w-full">
+                                        </div>
+                                    </div>
+                                    
+            
+                                    <div class="md:flex items-start gap-10">
+                                        <label class="md:w-32 text-right"> Bio </label>
+                                        <div class="flex-1 max-md:mt-4">
+                                            <textarea class="w-full" rows="5" name="bio" placeholder="{{bio}}"></textarea>
+                                        </div>
+                                    </div> 
+        
+                                    
+                                    
+                                    
+
+                                </div>
+      
+                                <div class="flex items-center justify-center gap-4 mt-16">
+                                    <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1"> Cancle</button>
+                                    
+                                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1"> Save <span class="ripple-overlay"></span></button>
+                                   
+                                </div>
+                                
+                            </div> 
+
+                        </div>
+                    </form>
+
+                        
+
+                 
+                        
+  
+                   
+                       
+
+                       
+                        
+                        
+                        
+                        <!-- tab password-->
+
+                        <div>
+                            {% with messages = get_flashed_messages() %}
+                                {% if messages %}
+                                    <ul>
+                                        {% for message in messages %}
+                                        <li>{{ message }}</li>
+                                        {% endfor %}
+                                    </ul>
+                                {% endif %}
+                            {% endwith %}
+                            <form method="POST" action="/profile/update/password"  >
+                            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+                            <div>
+                                
+                                <div class="space-y-6">
+
+                                   
+                                  
+                                    <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                                        <label class="md:w-40 text-right"> New password </label>
+                                        <div class="flex-1 max-md:mt-4">
+                                            <input type="password" name='password' placeholder="******" class="w-full">
+                                        </div>
+                                    </div>
+
+                                    <div class="md:flex items-center gap-16 justify-between max-md:space-y-3">
+                                        <label class="md:w-40 text-right"> Repeat password </label>
+                                        <div class="flex-1 max-md:mt-4">
+                                            <input type="password" name='rpassword' placeholder="******" class="w-full">
+                                        </div>
+                                    </div>
+
+                                   
+
+
+                                </div>
+                                
+                                <div class="flex items-center justify-center gap-4 mt-16">
+                                    <button type="submit" class="button lg:px-6 bg-secondery max-md:flex-1"> Cancle</button>
+                                    <button type="submit" class="button lg:px-10 bg-primary text-white max-md:flex-1"> Update</button>
+                                </div>
+
+                            </div>
+                        </form>
+                            
+                        </div>
+
+ 
+                    </div>
+                    
+                </div>
+
+            </div> 
+
+        </main>
+        
+    </div>
+
+  
+
+    
+ 
+    
+    <!-- Uikit js you can use cdn  https://getuikit.com/docs/installation  or fine the latest  https://getuikit.com/docs/installation -->
+    <script src="{{ url_for('static', filename='js/uikit.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+    <!-- Ion icon -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+ 
+
+</body>
+</html>
